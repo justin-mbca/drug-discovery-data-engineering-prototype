@@ -18,7 +18,7 @@ graph TD
     FE[React App]
   end
 
-  subgraph API & Auth
+  subgraph API_Auth
     GW[API Gateway]
     AUTH[Auth Service]
   end
@@ -27,15 +27,14 @@ graph TD
     BE[FastAPI Service]
   end
 
-  subgraph Data & Storage
+  subgraph Data_Storage
     BQ[BigQuery]
     GCS[Cloud Storage]
     CACHE[Redis Cache]
   end
 
-  subgraph ML
-    ML[ML Pipeline]
-  end
+  %% ML as a standalone node, not inside a subgraph
+  MLNode[ML Pipeline]
 
   %% ========== FLOWS ==========
 
@@ -47,8 +46,8 @@ graph TD
   BE -->|Store Files| GCS
   BE -->|Cache Read/Write| CACHE
 
-  BQ --> ML
-  ML -->|Predictions| BE
+  BQ --> MLNode
+  MLNode -->|Predictions| BE
 
 ```
 
