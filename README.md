@@ -1,129 +1,93 @@
 # drug-discovery-data-engineering-prototype
 
 ## Description
-A full-stack prototype for a Drug Discovery Data Engineering platform, closely aligned with the Calico Senior Data Engineer JD. This project demonstrates:
+A full-stack prototype for a Drug Discovery Data Engineering platform, closely aligned with the requirements of a modern Senior Data Engineer role in the life sciences domain. This project demonstrates:
 - End-to-end data flow from laboratory informatics systems (mocked CDD Vault, Mosaic, Benchling) to a cloud data warehouse (GCP BigQuery)
 - A Python FastAPI backend for data integration and API exposure
 - A React frontend for data visualization and review
 - Infrastructure-as-code with Terraform for GCP resource provisioning
 - Containerization with Docker and CI/CD readiness
 
-## Architecture
+## Architecture Overview
+The following high-level diagram shows the main system components and their interactions, from frontend to backend, API gateway, authentication, data storage, and machine learning integration:
 
 ```mermaid
 graph TD
-
-  %% ========== HIGH-LEVEL ARCHITECTURE ==========
   subgraph Frontend
     FE[React App]
   end
-
   subgraph API_Auth
     GW[API Gateway]
     AUTH[Auth Service]
   end
-
   subgraph Backend
     BE[FastAPI Service]
   end
-
   subgraph Data_Storage
     BQ[BigQuery]
     GCS[Cloud Storage]
     CACHE[Redis Cache]
   end
-
-  %% ML as a standalone node, not inside a subgraph
   MLNode[ML Pipeline]
-
-  %% ========== FLOWS ==========
-
   FE -->|HTTPS Requests| GW
   GW -->|Validate| AUTH
   GW -->|Route Request| BE
-
   BE -->|Query / Store Data| BQ
   BE -->|Store Files| GCS
   BE -->|Cache Read/Write| CACHE
-
   BQ --> MLNode
   MLNode -->|Predictions| BE
-
 ```
+
+### Detailed System Architecture
+The next diagram provides a more granular view, including mocked external informatics systems, data layer, and ML pipeline:
 
 ```mermaid
 graph TD
-
-  %% ========== FRONTEND ==========
   subgraph Frontend
     FE[React App]
   end
-
-  %% ========== API LAYER ==========
   subgraph API_Layer
     GW[API Gateway]
     AUTH[Auth Service]
   end
-
-  %% ========== BACKEND ==========
   subgraph Backend
     BE[FastAPI Service]
     CDD[CDD Vault Client - Mock]
     MOS[Mosaic Client - Mock]
     BEN[Benchling Client - Mock]
   end
-
-  %% ========== DATA LAYER ==========
   subgraph Data_Layer
     BQUTIL[BigQuery Client]
     CACHE[Redis Cache]
   end
-
-  %% ========== GCP ==========
   subgraph GCP
     BQ[BigQuery Dataset]
     GCS[Cloud Storage]
   end
-
-  %% ========== ML PIPELINE ==========
   subgraph ML_Pipeline
     ETL[ETL Pipeline]
     FEAT[Feature Engineering]
     ML[ML Model Training]
   end
-
-  %% ========== FLOWS ==========
-
-  %% Frontend -> API
   FE -->|HTTPS Request| GW
-
-  %% Auth flow
   GW -->|Validate Token| AUTH
   AUTH -->|Auth OK| GW
-
-  %% API -> Backend
   GW -->|Route Request| BE
-
-  %% Backend -> External Systems
   BE -->|REST API| CDD
   BE -->|REST API| MOS
   BE -->|REST API| BEN
-
-  %% Backend -> Data Layer
   BE -->|Query| BQUTIL
   BE -->|Cache Read/Write| CACHE
-
-  %% Data Layer -> GCP
   BQUTIL -->|SQL API| BQ
   BE -->|Upload/Download| GCS
-
-  %% ML Pipeline
   BQ --> ETL
   ETL --> FEAT
   FEAT --> ML
   ML -->|Predictions| BE
-
 ```
+
+These diagrams help illustrate both the overall and detailed data flows, system boundaries, and extensibility for future enhancements.
 
 ## Setup Instructions
 ### Prerequisites
@@ -165,7 +129,7 @@ docker run -p 3000:3000 drug-frontend
 - The frontend fetches and displays all data sources
 - Easily extend to real APIs by replacing mock clients
 
-## Alignment with Calico JD
+## Alignment with the Job Description
 - **End-to-End Project Ownership:** Demonstrates requirements gathering, integration, and deployment
 - **System Integration:** Connects multiple informatics systems and GCP BigQuery
 - **Data Flow Architecture:** Shows seamless data movement and review
