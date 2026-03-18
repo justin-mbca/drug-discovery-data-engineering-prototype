@@ -168,7 +168,35 @@ docker run -p 3000:3000 drug-frontend
   ```
 - CI/CD: Add a workflow in `.github/workflows/ci.yml` to run tests and lint on push.
 
-## Extending Mocks to Real APIs
+## Connecting to Real BigQuery Tables
+
+### Real BigQuery Connection (Python Example)
+To connect to a real BigQuery dataset, use the official Google Cloud BigQuery client in your backend. Example:
+
+```python
+from google.cloud import bigquery
+
+def get_bigquery_data():
+  client = bigquery.Client(project="YOUR_PROJECT_ID")
+  query = """
+    SELECT * FROM `your_project.drug_discovery.cdd`
+  """
+  query_job = client.query(query)
+  return [dict(row) for row in query_job]
+```
+
+**Switching Between Mock and Real Modes:**
+- Use an environment variable (e.g., `USE_MOCK_DATA=true/false`) in your backend to toggle between mock in-memory tables and real BigQuery queries.
+- In production, set up GCP credentials and ensure your service account has BigQuery access.
+
+### Data Sources
+- **CDD Vault:** Compound data (table: `cdd`)
+- **Mosaic:** Sample inventory (table: `mosaic`)
+- **Benchling:** Experiment/ELN data (table: `benchling`)
+
+The ETL process extracts data from these sources and loads them into BigQuery tables. In this prototype, the process is mocked, but the structure matches a real-world pipeline.
+
+---
 - Replace logic in `backend/routers/cdd.py`, `mosaic.py`, and `benchling.py` with real API calls using official SDKs or REST endpoints.
 - Store API credentials securely (e.g., GCP Secret Manager, environment variables).
 - Update the frontend to handle real data schemas and error cases.
