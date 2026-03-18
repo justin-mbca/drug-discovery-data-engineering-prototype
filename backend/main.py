@@ -5,7 +5,18 @@ from routers import mock_etl
 from utils.bigquery_client import get_bigquery_data
 
 
+
+from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 
