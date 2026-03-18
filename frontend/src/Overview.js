@@ -16,7 +16,7 @@ export default function Overview() {
         <li><b>Modes:</b> The system can run in <b>mock/demo</b> mode (in-memory data) or connect to <b>real BigQuery</b> for production.</li>
       </ol>
       <h3>Architecture Diagram</h3>
-      <img src="https://raw.githubusercontent.com/justin-mbca/drug-discovery-data-engineering-prototype/main/docs/architecture.png" alt="Architecture Diagram" style={{width: '100%', border: '1px solid #ccc', borderRadius: 8}} />
+      <img src="/ETLArchitecture.jpg" alt="Architecture Diagram" style={{width: '100%', border: '1px solid #ccc', borderRadius: 8}} />
       <h3>Key Features</h3>
       <ul>
         <li>End-to-end data flow from lab systems to analytics</li>
