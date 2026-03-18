@@ -11,34 +11,76 @@ A full-stack prototype for a Drug Discovery Data Engineering platform, closely a
 ## Architecture
 ```mermaid
 graph TD
-  FE[React App]
-  BE[FastAPI]
-  CDD[CDD Vault Client (Mock)]
-  MOS[Mosaic Client (Mock)]
-  BEN[Benchling Client (Mock)]
-  BQUTIL[BigQuery Client]
-  BQ[BigQuery Dataset]
 
+  %% ========== FRONTEND ==========
   subgraph Frontend
-    FE
-  end
-  subgraph Backend
-    BE
-    CDD
-    MOS
-    BEN
-    BQUTIL
-  end
-  subgraph GCP
-    BQ
+    FE[React App]
   end
 
-  FE -- REST API --> BE
-  BE -- REST API --> CDD
-  BE -- REST API --> MOS
-  BE -- REST API --> BEN
-  BE -- Query --> BQUTIL
-  BQUTIL -- API --> BQ
+  %% ========== API LAYER ==========
+  subgraph API_Layer
+    GW[API Gateway]
+    AUTH[Auth Service]
+  end
+
+  %% ========== BACKEND ==========
+  subgraph Backend
+    BE[FastAPI Service]
+    CDD[CDD Vault Client - Mock]
+    MOS[Mosaic Client - Mock]
+    BEN[Benchling Client - Mock]
+  end
+
+  %% ========== DATA LAYER ==========
+  subgraph Data_Layer
+    BQUTIL[BigQuery Client]
+    CACHE[Redis Cache]
+  end
+
+  %% ========== GCP ==========
+  subgraph GCP
+    BQ[BigQuery Dataset]
+    GCS[Cloud Storage]
+  end
+
+  %% ========== ML PIPELINE ==========
+  subgraph ML_Pipeline
+    ETL[ETL Pipeline]
+    FEAT[Feature Engineering]
+    ML[ML Model Training]
+  end
+
+  %% ========== FLOWS ==========
+
+  %% Frontend -> API
+  FE -->|HTTPS Request| GW
+
+  %% Auth flow
+  GW -->|Validate Token| AUTH
+  AUTH -->|Auth OK| GW
+
+  %% API -> Backend
+  GW -->|Route Request| BE
+
+  %% Backend -> External Systems
+  BE -->|REST API| CDD
+  BE -->|REST API| MOS
+  BE -->|REST API| BEN
+
+  %% Backend -> Data Layer
+  BE -->|Query| BQUTIL
+  BE -->|Cache Read/Write| CACHE
+
+  %% Data Layer -> GCP
+  BQUTIL -->|SQL API| BQ
+  BE -->|Upload/Download| GCS
+
+  %% ML Pipeline
+  BQ --> ETL
+  ETL --> FEAT
+  FEAT --> ML
+  ML -->|Predictions| BE
+
 ```
 
 ## Setup Instructions
