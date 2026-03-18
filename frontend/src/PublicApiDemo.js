@@ -65,6 +65,9 @@ function PublicApiDemo() {
   return (
     <div style={{marginTop: 40}}>
       <h2>Public Data API Demo</h2>
+      <div style={{marginBottom: 16, background: '#e8f5e9', padding: 14, borderRadius: 8, fontSize: 15}}>
+        <strong>Purpose:</strong> This demo compares compound data from two major public chemical databases—PubChem and ChEMBL—using their live APIs. It illustrates how the same molecule (e.g., Aspirin) can be represented differently across sources, and demonstrates integration, harmonization, and side-by-side analysis of external scientific data. This is a common real-world task in drug discovery data engineering.
+      </div>
       <div style={{
         marginBottom: 24,
         display: 'flex',
