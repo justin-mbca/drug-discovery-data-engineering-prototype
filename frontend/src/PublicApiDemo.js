@@ -1,0 +1,111 @@
+import React, { useState } from 'react';
+import axios from 'axios';
+import ChEMBLApiDemo from './ChEMBLApiDemo';
+
+
+function PublicApiDemo() {
+  const [pubchemCid, setPubchemCid] = useState('2244'); // Example: Aspirin
+  const [pubchemCompound, setPubchemCompound] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [chemblId, setChemblId] = useState('CHEMBL25');
+  const [chemblCompound, setChemblCompound] = useState(null);
+  const [chemblLoading, setChemblLoading] = useState(false);
+  const [chemblError, setChemblError] = useState(null);
+
+  const fetchPubChem = async () => {
+    setLoading(true);
+    setError(null);
+    setPubchemCompound(null);
+    try {
+      const res = await axios.get(
+        `https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/${pubchemCid}/JSON`
+      );
+      setPubchemCompound(res.data.PC_Compounds ? res.data.PC_Compounds[0] : null);
+    } catch (e) {
+      setError('Compound not found or API error.');
+    }
+    setLoading(false);
+  };
+
+  const fetchChEMBL = async () => {
+    setChemblLoading(true);
+    setChemblError(null);
+    setChemblCompound(null);
+    try {
+      const res = await axios.get(
+        `https://www.ebi.ac.uk/chembl/api/data/molecule/${chemblId}.json`
+      );
+      setChemblCompound(res.data);
+    } catch (e) {
+      setChemblError('Compound not found or API error.');
+    }
+    setChemblLoading(false);
+  };
+
+  // Simple analytics: compare atom counts if both compounds are loaded
+  let analytics = null;
+  if (pubchemCompound && chemblCompound) {
+    const pubchemAtoms = pubchemCompound.atoms?.aid?.length || 0;
+    const chemblAtoms = chemblCompound.molecule_structures?.canonical_smiles ? chemblCompound.molecule_structures.canonical_smiles.length : 0;
+    analytics = (
+      <div style={{marginTop: 24, background: '#e3f2fd', padding: 12, borderRadius: 8}}>
+        <strong>Simple Analytics:</strong><br />
+        PubChem Atoms: {pubchemAtoms}<br />
+        ChEMBL SMILES Length: {chemblAtoms}<br />
+        {pubchemAtoms && chemblAtoms ? (
+          <span>
+            Ratio (PubChem Atoms / ChEMBL SMILES Length): {(pubchemAtoms / chemblAtoms).toFixed(2)}
+          </span>
+        ) : null}
+      </div>
+    );
+  }
+
+  return (
+    <div style={{marginTop: 40}}>
+      <h2>Public Data API Demo</h2>
+      <div style={{marginBottom: 24, display: 'flex', gap: 40}}>
+        <div>
+          <h3>PubChem</h3>
+          <label>Compound CID: </label>
+          <input value={pubchemCid} onChange={e => setPubchemCid(e.target.value)} style={{width: 100}} />
+          <button onClick={fetchPubChem} disabled={loading} style={{marginLeft: 8}}>
+            {loading ? 'Loading...' : 'Fetch'}
+          </button>
+          {error && <div style={{color: 'red'}}>{error}</div>}
+          {pubchemCompound && (
+            <div style={{marginTop: 10, background: '#f4f4f4', padding: 12, borderRadius: 8}}>
+              <strong>CID:</strong> {pubchemCid}<br />
+              <strong>Title:</strong> {pubchemCompound.props?.[0]?.value?.sval || 'N/A'}<br />
+              <strong>Atoms:</strong> {pubchemCompound.atoms?.aid?.length || 'N/A'}<br />
+              <strong>Bonds:</strong> {pubchemCompound.bonds?.aid1?.length || 'N/A'}<br />
+              <pre style={{fontSize: 12, marginTop: 10}}>{JSON.stringify(pubchemCompound, null, 2)}</pre>
+            </div>
+          )}
+        </div>
+        <div>
+          <h3>ChEMBL</h3>
+          <label>ChEMBL ID: </label>
+          <input value={chemblId} onChange={e => setChemblId(e.target.value)} style={{width: 120}} />
+          <button onClick={fetchChEMBL} disabled={chemblLoading} style={{marginLeft: 8}}>
+            {chemblLoading ? 'Loading...' : 'Fetch'}
+          </button>
+          {chemblError && <div style={{color: 'red'}}>{chemblError}</div>}
+          {chemblCompound && (
+            <div style={{marginTop: 10, background: '#f4f4f4', padding: 12, borderRadius: 8}}>
+              <strong>ChEMBL ID:</strong> {chemblCompound.molecule_chembl_id}<br />
+              <strong>Preferred Name:</strong> {chemblCompound.pref_name || 'N/A'}<br />
+              <strong>Molecule Type:</strong> {chemblCompound.molecule_type}<br />
+              <strong>Canonical SMILES:</strong> {chemblCompound.molecule_structures?.canonical_smiles || 'N/A'}<br />
+              <pre style={{fontSize: 12, marginTop: 10}}>{JSON.stringify(chemblCompound, null, 2)}</pre>
+            </div>
+          )}
+        </div>
+      </div>
+      {analytics}
+    </div>
+  );
+}
+
+export default PublicApiDemo;
