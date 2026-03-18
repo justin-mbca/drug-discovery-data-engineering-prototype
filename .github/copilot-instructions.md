@@ -1,0 +1,7 @@
+- [x] Project scaffolded: Python FastAPI backend, React frontend, GCP BigQuery integration, mock CDD Vault, Mosaic, Benchling API clients, Docker, Terraform, GitHub Actions CI/CD, sample data flow, and documentation.
+- [ ] Customize the Project
+- [ ] Install Required Extensions
+- [ ] Compile the Project
+- [ ] Create and Run Task
+- [ ] Launch the Project
+- [ ] Ensure Documentation is Complete
