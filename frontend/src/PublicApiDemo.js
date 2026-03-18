@@ -69,13 +69,13 @@ function PublicApiDemo() {
         style={{
           marginBottom: 24,
           display: 'flex',
+          flexDirection: 'row',
           gap: 24,
-          flexWrap: 'wrap',
           alignItems: 'flex-start',
           justifyContent: 'flex-start',
         }}
       >
-        <div style={{flex: '0 0 50%', maxWidth: '50%', minWidth: 280, boxSizing: 'border-box'}}>
+        <div style={{flex: '0 0 50%', maxWidth: '50%', minWidth: 320, boxSizing: 'border-box', minHeight: 320}}>
           <h3>PubChem</h3>
           <label>Compound CID: </label>
           <input value={pubchemCid} onChange={e => setPubchemCid(e.target.value)} style={{width: 100}} />
@@ -93,7 +93,7 @@ function PublicApiDemo() {
             </div>
           )}
         </div>
-        <div style={{flex: '0 0 50%', maxWidth: '50%', minWidth: 280, boxSizing: 'border-box'}}>
+        <div style={{flex: '0 0 50%', maxWidth: '50%', minWidth: 320, boxSizing: 'border-box', minHeight: 320}}>
           <h3>ChEMBL</h3>
           <label>ChEMBL ID: </label>
           <input value={chemblId} onChange={e => setChemblId(e.target.value)} style={{width: 120}} />
