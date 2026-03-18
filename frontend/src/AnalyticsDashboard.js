@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+// Set axios base URL for all API requests
+axios.defaults.baseURL = 'https://drug-discovery-data-engineering-prototype.onrender.com';
+
 
 function AnalyticsDashboard() {
   // Info modal state
