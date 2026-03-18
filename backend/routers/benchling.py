@@ -1,3 +1,10 @@
+import os
+
+# Benchling API credentials (set these as environment variables)
+BENCHLING_API_KEY = os.environ.get("BENCHLING_API_KEY")
+BENCHLING_BASE_URL = os.environ.get("BENCHLING_BASE_URL", "https://api.benchling.com/v2")
+# Switch: use real API if BENCHLING_USE_REAL_API is set to '1', else use mock data
+BENCHLING_USE_REAL_API = os.environ.get("BENCHLING_USE_REAL_API", "0") == "1"
 from fastapi import APIRouter, Response, Request
 
 router = APIRouter()
@@ -9,7 +16,17 @@ def get_benchling_data(response: Response, request: Request):
     response.headers["Expires"] = "0"
     if "etag" in response.headers:
         del response.headers["etag"]
-    # Mocked Benchling ELN data
+    if BENCHLING_USE_REAL_API and BENCHLING_API_KEY:
+        import requests
+        headers = {"Authorization": f"Bearer {BENCHLING_API_KEY}"}
+        try:
+            r = requests.get(f"{BENCHLING_BASE_URL}/entities", headers=headers)
+            r.raise_for_status()
+            data = r.json()
+            return {"benchling": data}
+        except Exception as e:
+            return {"benchling": {"error": str(e)}}
+    # Default: return mock data
     return {
         "benchling": {
             "entry_id": "ELN789",

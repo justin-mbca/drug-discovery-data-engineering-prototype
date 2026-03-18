@@ -1,3 +1,8 @@
+import os
+
+# Mosaic API credentials (set these as environment variables)
+MOSAIC_API_KEY = os.environ.get("MOSAIC_API_KEY")
+MOSAIC_BASE_URL = os.environ.get("MOSAIC_BASE_URL", "https://api.mosaic.com/v1")
 from fastapi import APIRouter, Response, Request
 
 router = APIRouter()

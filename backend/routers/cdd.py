@@ -1,3 +1,8 @@
+import os
+
+# CDD Vault API credentials (set these as environment variables)
+CDD_API_KEY = os.environ.get("CDD_API_KEY")
+CDD_BASE_URL = os.environ.get("CDD_BASE_URL", "https://app.collaborativedrug.com/api/v1")
 from fastapi import APIRouter, Response, Request
 
 router = APIRouter()
