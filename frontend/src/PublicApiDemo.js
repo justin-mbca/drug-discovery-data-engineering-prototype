@@ -65,8 +65,15 @@ function PublicApiDemo() {
   return (
     <div style={{marginTop: 40}}>
       <h2>Public Data API Demo</h2>
-      <div style={{marginBottom: 24, display: 'flex', gap: 40}}>
-        <div>
+      <div style={{
+        marginBottom: 24,
+        display: 'flex',
+        gap: 24,
+        flexWrap: 'wrap',
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start',
+      }}>
+        <div style={{flex: '1 1 320px', maxWidth: 400, minWidth: 280, boxSizing: 'border-box'}}>
           <h3>PubChem</h3>
           <label>Compound CID: </label>
           <input value={pubchemCid} onChange={e => setPubchemCid(e.target.value)} style={{width: 100}} />
@@ -75,16 +82,16 @@ function PublicApiDemo() {
           </button>
           {error && <div style={{color: 'red'}}>{error}</div>}
           {pubchemCompound && (
-            <div style={{marginTop: 10, background: '#f4f4f4', padding: 12, borderRadius: 8}}>
+            <div style={{marginTop: 10, background: '#f4f4f4', padding: 12, borderRadius: 8, width: '100%', boxSizing: 'border-box', overflowX: 'auto'}}>
               <strong>CID:</strong> {pubchemCid}<br />
               <strong>Title:</strong> {pubchemCompound.props?.[0]?.value?.sval || 'N/A'}<br />
               <strong>Atoms:</strong> {pubchemCompound.atoms?.aid?.length || 'N/A'}<br />
               <strong>Bonds:</strong> {pubchemCompound.bonds?.aid1?.length || 'N/A'}<br />
-              <pre style={{fontSize: 12, marginTop: 10}}>{JSON.stringify(pubchemCompound, null, 2)}</pre>
+              <pre style={{fontSize: 12, marginTop: 10, width: '100%', maxWidth: '100%', overflowX: 'auto', whiteSpace: 'pre', wordBreak: 'break-all'}}>{JSON.stringify(pubchemCompound, null, 2)}</pre>
             </div>
           )}
         </div>
-        <div>
+        <div style={{flex: '1 1 320px', maxWidth: 400, minWidth: 280, boxSizing: 'border-box'}}>
           <h3>ChEMBL</h3>
           <label>ChEMBL ID: </label>
           <input value={chemblId} onChange={e => setChemblId(e.target.value)} style={{width: 120}} />
@@ -93,12 +100,12 @@ function PublicApiDemo() {
           </button>
           {chemblError && <div style={{color: 'red'}}>{chemblError}</div>}
           {chemblCompound && (
-            <div style={{marginTop: 10, background: '#f4f4f4', padding: 12, borderRadius: 8}}>
+            <div style={{marginTop: 10, background: '#f4f4f4', padding: 12, borderRadius: 8, width: '100%', boxSizing: 'border-box', overflowX: 'auto'}}>
               <strong>ChEMBL ID:</strong> {chemblCompound.molecule_chembl_id}<br />
               <strong>Preferred Name:</strong> {chemblCompound.pref_name || 'N/A'}<br />
               <strong>Molecule Type:</strong> {chemblCompound.molecule_type}<br />
               <strong>Canonical SMILES:</strong> {chemblCompound.molecule_structures?.canonical_smiles || 'N/A'}<br />
-              <pre style={{fontSize: 12, marginTop: 10}}>{JSON.stringify(chemblCompound, null, 2)}</pre>
+              <pre style={{fontSize: 12, marginTop: 10, width: '100%', maxWidth: '100%', overflowX: 'auto', whiteSpace: 'pre', wordBreak: 'break-all'}}>{JSON.stringify(chemblCompound, null, 2)}</pre>
             </div>
           )}
         </div>
