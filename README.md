@@ -9,6 +9,49 @@ A full-stack prototype for a Drug Discovery Data Engineering platform, closely a
 - Containerization with Docker and CI/CD readiness
 
 ## Architecture
+
+```mermaid
+graph TD
+
+  %% ========== HIGH-LEVEL ARCHITECTURE ==========
+  subgraph Frontend
+    FE[React App]
+  end
+
+  subgraph API & Auth
+    GW[API Gateway]
+    AUTH[Auth Service]
+  end
+
+  subgraph Backend
+    BE[FastAPI Service]
+  end
+
+  subgraph Data & Storage
+    BQ[BigQuery]
+    GCS[Cloud Storage]
+    CACHE[Redis Cache]
+  end
+
+  subgraph ML
+    ML[ML Pipeline]
+  end
+
+  %% ========== FLOWS ==========
+
+  FE -->|HTTPS Requests| GW
+  GW -->|Validate| AUTH
+  GW -->|Route Request| BE
+
+  BE -->|Query / Store Data| BQ
+  BE -->|Store Files| GCS
+  BE -->|Cache Read/Write| CACHE
+
+  BQ --> ML
+  ML -->|Predictions| BE
+
+```
+
 ```mermaid
 graph TD
 
