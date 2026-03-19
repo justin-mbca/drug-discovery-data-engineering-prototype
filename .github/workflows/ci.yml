@@ -62,24 +62,24 @@ jobs:
       - name: Load Benchling mock data to BigQuery
         env:
           GCP_PROJECT_ID: my-fastapi-demo-490623
-          BQ_DATASET_ID: your_dataset
-          BQ_TABLE_ID: your_table
+          BQ_DATASET_ID: drug_discovery_demo
+          BQ_TABLE_ID: benchling_data
         run: |
           cd backend/scripts
           python load_mocked_to_bq.py --endpoint benchling
       - name: Load CDD mock data to BigQuery
         env:
           GCP_PROJECT_ID: my-fastapi-demo-490623
-          BQ_DATASET_ID: your_dataset
-          BQ_TABLE_ID: your_table
+          BQ_DATASET_ID: drug_discovery_demo
+          BQ_TABLE_ID: cdd_vault_data
         run: |
           cd backend/scripts
           python load_mocked_to_bq.py --endpoint cdd
       - name: Load Mosaic mock data to BigQuery
         env:
           GCP_PROJECT_ID: my-fastapi-demo-490623
-          BQ_DATASET_ID: your_dataset
-          BQ_TABLE_ID: your_table
+          BQ_DATASET_ID: drug_discovery_demo
+          BQ_TABLE_ID: mosaic_inventory
         run: |
           cd backend/scripts
           python load_mocked_to_bq.py --endpoint mosaic
