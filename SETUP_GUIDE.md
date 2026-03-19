@@ -109,6 +109,18 @@ kubectl rollout restart deployment fastapi-backend
 kubectl rollout restart deployment react-frontend
 ```
 
+## Deployment Options: When to Use Each
+
+| Method                | Use When...                                                                 |
+|-----------------------|------------------------------------------------------------------------------|
+| **GCS (Frontend only)** | You want simple, cost-effective static hosting for the React frontend only.  |
+| **Cloud Run (Backend)** | You need to deploy a containerized backend API with minimal infrastructure management and autoscaling. |
+| **Kubernetes (GKE)**    | You require full control, advanced orchestration, multi-service deployments, or production-grade scalability and reliability for both frontend and backend. |
+
+- **GCS** is best for static sites with no server-side logic.
+- **Cloud Run** is ideal for quick, serverless backend deployments with autoscaling.
+- **Kubernetes** is recommended for complex, multi-service, or production environments where you need advanced features and control.
+
 ---
 
 For more details, see the main [README.md](README.md) and [infra/](infra/) directory.
