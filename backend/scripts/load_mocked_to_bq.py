@@ -69,9 +69,22 @@ def insert_data(rows, endpoint):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Load mock API data into BigQuery.")
     parser.add_argument("--endpoint", choices=["benchling", "cdd", "mosaic"], required=True, help="Which mock API endpoint to load from.")
+    parser.add_argument("--dataset", type=str, default=None, help="BigQuery dataset ID (overrides env var)")
+    parser.add_argument("--table", type=str, default=None, help="BigQuery table ID (overrides env var)")
     args = parser.parse_args()
-    data = fetch_data(args.endpoint)
-    insert_data(data, args.endpoint)
+
+    # Allow command-line override of dataset/table
+    if args.dataset:
+        os.environ["BQ_DATASET_ID"] = args.dataset
+    if args.table:
+        os.environ["BQ_TABLE_ID"] = args.table
+
+    # Re-evaluate these after possible override
+    DATASET_ID = os.environ.get("BQ_DATASET_ID", "your_dataset")
+    TABLE_ID = os.environ.get("BQ_TABLE_ID", "your_table")
+
+    endpoint_data = fetch_data(args.endpoint)
+    insert_data(endpoint_data, args.endpoint)
 
 # Usage:
 # python load_mocked_to_bq.py --endpoint benchling

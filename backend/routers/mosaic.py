@@ -14,13 +14,29 @@ def get_mosaic_data(response: Response, request: Request):
     response.headers["Expires"] = "0"
     if "etag" in response.headers:
         del response.headers["etag"]
-    # Mocked Mosaic inventory data
+    # Mocked Mosaic inventory data (multiple unique records)
     return {
-        "mosaic": {
-            "sample_id": "SMP456",
-            "location": "Freezer A - Rack 3",
-            "quantity": 120,
-            "unit": "uL",
-            "status": "Available"
-        }
+        "mosaic": [
+            {
+                "sample_id": "SMP456",
+                "location": "Freezer A - Rack 3",
+                "quantity": 120,
+                "unit": "uL",
+                "status": "Available"
+            },
+            {
+                "sample_id": "SMP457",
+                "location": "Freezer B - Rack 1",
+                "quantity": 80,
+                "unit": "uL",
+                "status": "Checked Out"
+            },
+            {
+                "sample_id": "SMP458",
+                "location": "Refrigerator - Shelf 2",
+                "quantity": 200,
+                "unit": "uL",
+                "status": "Available"
+            }
+        ]
     }

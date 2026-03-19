@@ -26,13 +26,29 @@ def get_benchling_data(response: Response, request: Request):
             return {"benchling": data}
         except Exception as e:
             return {"benchling": {"error": str(e)}}
-    # Default: return mock data
+    # Default: return mock data (multiple unique records)
     return {
-        "benchling": {
-            "entry_id": "ELN789",
-            "experiment": "Enzyme Kinetics",
-            "date": "2026-03-18",
-            "scientist": "Dr. Jane Doe",
-            "result": "Increased activity observed at pH 7.4"
-        }
+        "benchling": [
+            {
+                "entry_id": "ELN789",
+                "experiment": "Enzyme Kinetics",
+                "date": "2026-03-18",
+                "scientist": "Dr. Jane Doe",
+                "result": "Increased activity observed at pH 7.4"
+            },
+            {
+                "entry_id": "ELN790",
+                "experiment": "Protein Purification",
+                "date": "2026-03-17",
+                "scientist": "Dr. John Smith",
+                "result": "Yield improved with new buffer"
+            },
+            {
+                "entry_id": "ELN791",
+                "experiment": "Cell Culture",
+                "date": "2026-03-16",
+                "scientist": "Dr. Alice Lee",
+                "result": "Contamination detected in batch 3"
+            }
+        ]
     }

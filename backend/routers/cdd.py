@@ -15,13 +15,29 @@ def get_cdd_data(response: Response, request: Request):
     # Remove ETag if present
     if "etag" in response.headers:
         del response.headers["etag"]
-    # Mocked CDD Vault data
+    # Mocked CDD Vault data (multiple unique records)
     return {
-        "cdd": {
-            "compound_id": "ABC123",
-            "name": "Aspirin",
-            "structure": "CC(=O)OC1=CC=CC=C1C(=O)O",
-            "activity": "Active",
-            "project": "Pain Relief"
-        }
+        "cdd": [
+            {
+                "compound_id": "ABC123",
+                "name": "Aspirin",
+                "structure": "CC(=O)OC1=CC=CC=C1C(=O)O",
+                "activity": "Active",
+                "project": "Pain Relief"
+            },
+            {
+                "compound_id": "DEF456",
+                "name": "Ibuprofen",
+                "structure": "CC(C)CC1=CC=C(C=C1)C(C)C(=O)O",
+                "activity": "Inactive",
+                "project": "Inflammation"
+            },
+            {
+                "compound_id": "GHI789",
+                "name": "Paracetamol",
+                "structure": "CC(=O)NC1=CC=C(O)C=C1",
+                "activity": "Active",
+                "project": "Fever"
+            }
+        ]
     }
