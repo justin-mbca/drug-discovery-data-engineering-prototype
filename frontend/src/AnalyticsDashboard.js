@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-// Set axios base URL for all API requests
-axios.defaults.baseURL = 'https://drug-discovery-data-engineering-prototype.onrender.com';
+// Set axios base URL for all API requests (configurable for local/cloud)
+axios.defaults.baseURL = process.env.REACT_APP_API_URL || 'https://drug-discovery-data-engineering-prototype.onrender.com';
 
 
 function AnalyticsDashboard() {
@@ -20,8 +20,12 @@ function AnalyticsDashboard() {
   const runEtl = async () => {
     setLoading(true);
     setEtlStatus('Running ETL...');
-    await axios.post('/mock/etl/run');
-    setEtlStatus('ETL complete!');
+    try {
+      await axios.post('/mock/etl/run');
+      setEtlStatus('ETL complete!');
+    } catch (e) {
+      setEtlStatus('ETL failed.');
+    }
     setLoading(false);
     fetchTables();
     fetchSummary();
@@ -71,8 +75,11 @@ function AnalyticsDashboard() {
         </div>
       )}
       <button onClick={runEtl} disabled={loading} style={{marginBottom: 10}}>
-        Run ETL (Load Mock Data)
+        {loading ? 'Running ETL...' : 'Run ETL (Load Mock Data)'}
       </button>
+      {loading && (
+        <div style={{ color: '#1976d2', fontWeight: 'bold', marginBottom: 10 }}>Running ETL, please wait...</div>
+      )}
       <div>{etlStatus}</div>
       <div style={{marginTop: 20}}>
         <button onClick={fetchTables}>Show Mock Tables</button>
