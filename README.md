@@ -1,5 +1,25 @@
-
 # drug-discovery-data-engineering-prototype
+
+## Live Demo
+
+You can try the live demo application here:
+
+- [Drug Discovery Data Engineering Demo (Vercel)](https://drug-discovery-data-engineering-pro.vercel.app/)
+
+This demo showcases an end-to-end data flow from laboratory informatics systems (mocked CDD Vault, Mosaic, Benchling) to a cloud data warehouse (GCP BigQuery), with a modern React frontend and Python FastAPI backend. The system demonstrates:
+
+- Automated ETL (Extract, Transform, Load) pipelines that ingest, clean, and harmonize data from multiple lab informatics sources.
+- Real-time and batch data integration, supporting both mock/demo and live BigQuery environments.
+- A FastAPI backend that exposes unified REST APIs for data access, analytics, and workflow automation.
+- A React frontend dashboard for running ETL jobs, visualizing data tables, and exploring analytics.
+- Extensible architecture supporting future integration with additional data sources, ML pipelines, and advanced analytics.
+
+## Project Documentation
+
+All technical documentation, deployment, and workflow steps are available in the GitHub repository:
+
+- [README.md (Project Overview & Setup)](https://github.com/justin-mbca/drug-discovery-data-engineering-prototype/blob/main/README.md)
+- [infra/ directory (Infrastructure-as-Code)](https://github.com/justin-mbca/drug-discovery-data-engineering-prototype/tree/main/infra)
 
 ## Description
 A full-stack prototype for a Drug Discovery Data Engineering platform, closely aligned with the requirements of a modern Senior Data Engineer role in the life sciences domain. This project demonstrates:
