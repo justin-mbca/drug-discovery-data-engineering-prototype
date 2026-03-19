@@ -66,7 +66,7 @@ jobs:
           BQ_TABLE_ID: benchling_data
         run: |
           pip install google-cloud-bigquery
-          python -c "from google.cloud import bigquery; client = bigquery.Client(project='$GCP_PROJECT_ID'); client.query(f'DELETE FROM `{GCP_PROJECT_ID}.{BQ_DATASET_ID}.{BQ_TABLE_ID}` WHERE TRUE').result(); print('Truncated table: {BQ_TABLE_ID}')"
+          python -c "from google.cloud import bigquery; client = bigquery.Client(project='$GCP_PROJECT_ID'); client.query(f'TRUNCATE TABLE `{GCP_PROJECT_ID}.{BQ_DATASET_ID}.{BQ_TABLE_ID}`').result(); print('Truncated table: {BQ_TABLE_ID}')"
       - name: Load Benchling mock data to BigQuery
         env:
           GCP_PROJECT_ID: my-fastapi-demo-490623
@@ -82,7 +82,7 @@ jobs:
           BQ_TABLE_ID: cdd_vault_data
         run: |
           pip install google-cloud-bigquery
-          python -c "from google.cloud import bigquery; client = bigquery.Client(project='$GCP_PROJECT_ID'); client.query(f'DELETE FROM `{GCP_PROJECT_ID}.{BQ_DATASET_ID}.{BQ_TABLE_ID}` WHERE TRUE').result(); print('Truncated table: {BQ_TABLE_ID}')"
+          python -c "from google.cloud import bigquery; client = bigquery.Client(project='$GCP_PROJECT_ID'); client.query(f'TRUNCATE TABLE `{GCP_PROJECT_ID}.{BQ_DATASET_ID}.{BQ_TABLE_ID}`').result(); print('Truncated table: {BQ_TABLE_ID}')"
       - name: Load CDD mock data to BigQuery
         env:
           GCP_PROJECT_ID: my-fastapi-demo-490623
@@ -98,7 +98,7 @@ jobs:
           BQ_TABLE_ID: mosaic_inventory
         run: |
           pip install google-cloud-bigquery
-          python -c "from google.cloud import bigquery; client = bigquery.Client(project='$GCP_PROJECT_ID'); client.query(f'DELETE FROM `{GCP_PROJECT_ID}.{BQ_DATASET_ID}.{BQ_TABLE_ID}` WHERE TRUE').result(); print('Truncated table: {BQ_TABLE_ID}')"
+          python -c "from google.cloud import bigquery; client = bigquery.Client(project='$GCP_PROJECT_ID'); client.query(f'TRUNCATE TABLE `{GCP_PROJECT_ID}.{BQ_DATASET_ID}.{BQ_TABLE_ID}`').result(); print('Truncated table: {BQ_TABLE_ID}')"
       - name: Load Mosaic mock data to BigQuery
         env:
           GCP_PROJECT_ID: my-fastapi-demo-490623
