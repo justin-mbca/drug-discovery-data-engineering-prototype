@@ -81,6 +81,34 @@ gsutil -m rsync -r build gs://YOUR_GCS_BUCKET_NAME
 gsutil iam ch allUsers:objectViewer gs://YOUR_GCS_BUCKET_NAME
 ```
 
+## 9. Deploying with Kubernetes (GKE)
+
+```sh
+# Build and push backend Docker image for GKE
+cd backend
+docker buildx build --platform linux/amd64 -t fastapi-backend:latest .
+docker tag fastapi-backend:latest gcr.io/YOUR_PROJECT_ID/fastapi-backend:latest
+docker push gcr.io/YOUR_PROJECT_ID/fastapi-backend:latest
+
+# Build and push frontend Docker image for GKE
+cd ../frontend
+docker buildx build --platform linux/amd64 -t react-frontend:latest .
+docker tag react-frontend:latest gcr.io/YOUR_PROJECT_ID/react-frontend:latest
+docker push gcr.io/YOUR_PROJECT_ID/react-frontend:latest
+
+# Apply Kubernetes manifests (from infra/)
+cd ../infra
+kubectl apply -f backend-deployment.yaml
+kubectl apply -f backend-service.yaml
+kubectl apply -f frontend-deployment.yaml
+kubectl apply -f frontend-service.yaml
+kubectl apply -f ingress.yaml
+
+# Restart deployments after pushing new images
+kubectl rollout restart deployment fastapi-backend
+kubectl rollout restart deployment react-frontend
+```
+
 ---
 
 For more details, see the main [README.md](README.md) and [infra/](infra/) directory.
