@@ -60,11 +60,10 @@ jobs:
         with:
           credentials_json: '${{ secrets.GCP_SA_KEY }}'
       - name: Truncate Benchling table
-        env:
-          GCP_PROJECT_ID: my-fastapi-demo-490623
-          BQ_DATASET_ID: drug_discovery_demo
-          BQ_TABLE_ID: benchling_data
         run: |
+          export GCP_PROJECT_ID=my-fastapi-demo-490623
+          export BQ_DATASET_ID=drug_discovery_demo
+          export BQ_TABLE_ID=benchling_data
           echo "GCP_PROJECT_ID=$GCP_PROJECT_ID"
           echo "BQ_DATASET_ID=$BQ_DATASET_ID"
           echo "BQ_TABLE_ID=$BQ_TABLE_ID"
@@ -79,13 +78,15 @@ jobs:
           cd backend/scripts
           python load_mocked_to_bq.py --endpoint benchling
       - name: Truncate CDD table
-        env:
-          GCP_PROJECT_ID: my-fastapi-demo-490623
-          BQ_DATASET_ID: drug_discovery_demo
-          BQ_TABLE_ID: cdd_vault_data
         run: |
+          export GCP_PROJECT_ID=my-fastapi-demo-490623
+          export BQ_DATASET_ID=drug_discovery_demo
+          export BQ_TABLE_ID=cdd_vault_data
+          echo "GCP_PROJECT_ID=$GCP_PROJECT_ID"
+          echo "BQ_DATASET_ID=$BQ_DATASET_ID"
+          echo "BQ_TABLE_ID=$BQ_TABLE_ID"
           pip install google-cloud-bigquery
-          python -c "import os; from google.cloud import bigquery; project=os.environ['GCP_PROJECT_ID']; dataset=os.environ['BQ_DATASET_ID']; table=os.environ['BQ_TABLE_ID']; sql=f'TRUNCATE TABLE `{project}.{dataset}.{table}`'; print('SQL to execute:', sql); client=bigquery.Client(project=project); client.query(sql).result(); print(f'Truncated table: {table}')"
+          python -c 'import os; print("PYTHON ENV:", os.environ.get("GCP_PROJECT_ID"), os.environ.get("BQ_DATASET_ID"), os.environ.get("BQ_TABLE_ID")); from google.cloud import bigquery; project=os.environ["GCP_PROJECT_ID"]; dataset=os.environ["BQ_DATASET_ID"]; table=os.environ["BQ_TABLE_ID"]; print("Project:", project); print("Dataset:", dataset); print("Table:", table); sql="TRUNCATE TABLE `" + project + "." + dataset + "." + table + "`"; print("SQL to execute:", sql); client=bigquery.Client(project=project); client.query(sql).result(); print("Truncated table:", table)'
       - name: Load CDD mock data to BigQuery
         env:
           GCP_PROJECT_ID: my-fastapi-demo-490623
@@ -95,13 +96,15 @@ jobs:
           cd backend/scripts
           python load_mocked_to_bq.py --endpoint cdd
       - name: Truncate Mosaic table
-        env:
-          GCP_PROJECT_ID: my-fastapi-demo-490623
-          BQ_DATASET_ID: drug_discovery_demo
-          BQ_TABLE_ID: mosaic_inventory
         run: |
+          export GCP_PROJECT_ID=my-fastapi-demo-490623
+          export BQ_DATASET_ID=drug_discovery_demo
+          export BQ_TABLE_ID=mosaic_inventory
+          echo "GCP_PROJECT_ID=$GCP_PROJECT_ID"
+          echo "BQ_DATASET_ID=$BQ_DATASET_ID"
+          echo "BQ_TABLE_ID=$BQ_TABLE_ID"
           pip install google-cloud-bigquery
-          python -c "import os; from google.cloud import bigquery; project=os.environ['GCP_PROJECT_ID']; dataset=os.environ['BQ_DATASET_ID']; table=os.environ['BQ_TABLE_ID']; sql=f'TRUNCATE TABLE `{project}.{dataset}.{table}`'; print('SQL to execute:', sql); client=bigquery.Client(project=project); client.query(sql).result(); print(f'Truncated table: {table}')"
+          python -c 'import os; print("PYTHON ENV:", os.environ.get("GCP_PROJECT_ID"), os.environ.get("BQ_DATASET_ID"), os.environ.get("BQ_TABLE_ID")); from google.cloud import bigquery; project=os.environ["GCP_PROJECT_ID"]; dataset=os.environ["BQ_DATASET_ID"]; table=os.environ["BQ_TABLE_ID"]; print("Project:", project); print("Dataset:", dataset); print("Table:", table); sql="TRUNCATE TABLE `" + project + "." + dataset + "." + table + "`"; print("SQL to execute:", sql); client=bigquery.Client(project=project); client.query(sql).result(); print("Truncated table:", table)'
       - name: Load Mosaic mock data to BigQuery
         env:
           GCP_PROJECT_ID: my-fastapi-demo-490623
