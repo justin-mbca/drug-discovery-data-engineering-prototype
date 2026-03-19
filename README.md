@@ -1,7 +1,6 @@
 
 # drug-discovery-data-engineering-prototype
 
-
 ## Description
 A full-stack prototype for a Drug Discovery Data Engineering platform, closely aligned with the requirements of a modern Senior Data Engineer role in the life sciences domain. This project demonstrates:
 - End-to-end data flow from laboratory informatics systems (mocked CDD Vault, Mosaic, Benchling) to a cloud data warehouse (GCP BigQuery)
@@ -207,3 +206,4 @@ The ETL process extracts data from these sources and loads them into BigQuery ta
 ---
 
 > For questions or demo, contact the project author.
+
