@@ -49,7 +49,7 @@ def get_existing_ids(client, table_ref, id_field):
     return set(row[id_field] for row in query_job)
 
 def insert_data(rows, endpoint):
-    client = bigquery.Client(project=PROJECT_ID)
+    client = bigquery.Client(project=PROJECT_ID, location="US")
     table_ref = f"{PROJECT_ID}.{DATASET_ID}.{TABLE_ID}"
     if isinstance(rows, dict):
         rows = [rows]

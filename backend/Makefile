@@ -1,3 +1,7 @@
+# Run all mock data loaders
+.PHONY: load-all-mock
+load-all-mock:
+	bash ../../run_all_loaders.sh
 # Cloud Run build, push, and deploy
 REGION=us-central1
 PROJECT_ID=my-fastapi-demo-490623

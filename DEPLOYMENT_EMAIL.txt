@@ -1,0 +1,18 @@
+Subject: Drug Discovery Data Engineering Demo – Application Submission
+
+Hi,
+
+Could you please forward this email to the hiring team for their review?
+
+I am sharing my recent work on a drug discovery data engineering prototype as part of my application. The demo application is live and can be accessed here:
+https://drug-discovery-data-engineering-pro.vercel.app/
+
+This demo showcases an end-to-end data flow from laboratory informatics systems to a cloud data warehouse, with a React frontend and FastAPI backend.
+
+For technical reviewers: All Google Cloud Platform (GCP) deployment, automation, and workflow steps are fully documented in the project’s GitHub repository:
+- [README.md](https://github.com/justin-mbca/drug-discovery-data-engineering-prototype/blob/main/README.md)
+- [infra/ directory](https://github.com/justin-mbca/drug-discovery-data-engineering-prototype/tree/main/infra)
+- [SETUP_GUIDE.md](https://github.com/justin-mbca/drug-discovery-data-engineering-prototype/blob/main/SETUP_GUIDE.md)
+
+Best regards,
+Justin
